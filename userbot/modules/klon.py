@@ -2,6 +2,7 @@
 
 import os
 import asyncio
+import random
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -13,6 +14,13 @@ from userbot.cmdhelp import CmdHelp
 PHOTO = TEMP_DOWNLOAD_DIRECTORY + "pp.jpg"
 USERINFO= {}
 
+KLONLAMAQ = [
+ "**Sənin profilini kopyalayıram** 🙃",
+ "`Huhu, Kopyaladım!` 🤓",
+ "`Ahaha, kopyalamaq mənim işimdi.` 🤪",
+ "**Həci fçuu, sürətli idi hə?**\n**N Σ O N belədi də.** 😃",
+ "**Klonladım.** 🗡️",
+ "`Artıq sənə oxşayıram hə?` 😃\n`Klonlandın.` 😅"]
 
 @register(outgoing=True, pattern="^.klon(?: |$)(.*)")
 async def klon(event):
@@ -27,7 +35,7 @@ async def klon(event):
         await event.edit("Klonlamağım üçün bir istifadəçiyə reply atmalısan😳")
         return
 
-    await event.edit("Klonlanır🤠...")
+    await event.edit("Klonlanır...")
 
     try:
         user = await bot(GetFullUserRequest(inp))
@@ -39,7 +47,7 @@ async def klon(event):
     me = await event.client.get_me()
 
     if USERINFO or os.path.exists(PHOTO):
-        await event.edit("Pff Xəta❌.")
+        await event.edit("**Pff Xəta❌.**")
         await asyncio.sleep(2)
         await event.delete()
         return
@@ -65,13 +73,13 @@ async def klon(event):
     await bot(
         UploadProfilePhotoRequest(file=await event.client.upload_file(PHOTO))
     )
-    await event.edit("Hey Səni Klonladım😎!")
+    await event.edit(random.choice(KLONLAMAQ))
 
 
 @register(outgoing=True, pattern="^.revert(?: |$)(.*)")
 async def revert(event):
     if not (USERINFO or os.path.exists(PHOTO)):
-        await event.edit("Onsuzda sən özünsən🤷🏻‍♂️")
+        await event.edit("__Onsuzda sən özünsən.__ 🤷🏻‍♂️")
         return
     if USERINFO:
         await bot(UpdateProfileRequest(**USERINFO))
@@ -91,7 +99,7 @@ async def revert(event):
             )
         )
         os.remove(PHOTO)
-    await event.edit("Hesab əvvəlki vəziyyətinə qaytarıldı✅!")
+    await event.edit("__Hesab əvvəlki vəziyyətinə qaytarıldı!__ ✅")
 
 
 CmdHelp('klon').add_command(
