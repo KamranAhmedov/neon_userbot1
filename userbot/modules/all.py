@@ -15,7 +15,7 @@ async def _(q):
 		seasons = q.pattern_match.group(1)
 	else:
 		await q.edit("**Bir səbəb yaz...** 👀\n**Nümunə:** `.tag Aktiv olaq millət 😃🗡️`")
-                return
+        return
 	chat = await q.get_input_chat()
 	a_=0
 	await q.delete()
