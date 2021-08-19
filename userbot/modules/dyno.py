@@ -82,4 +82,4 @@ async def dyno_usage(dyno):
                            )
 
 c= CmdHelp('dyno')
-c.add_command("dyno","İşlədilən yaxud qalan dyno saatını göstərər").add()
+c.add_command("dyno",None,"İşlədilən yaxud qalan dyno saatını göstərər").add()
