@@ -14,7 +14,7 @@ async def _(q):
 	if q.pattern_match.group(1):
 		seasons = q.pattern_match.group(1)
 	else:
-		seasons = ""
+		await q.edit("**Bir səbəb yaz...** 👀\n**Nümunə:** `.tag Aktiv olaq millət 😃🗡️`")
 
 	chat = await q.get_input_chat()
 	a_=0
@@ -34,7 +34,7 @@ async def _(q):
 	if q.pattern_match.group(1):
 		seasons = q.pattern_match.group(1)
 	else:
-		seasons = ""
+		  await q.edit("**Bir səbəb yaz...** 👀\n**Nümunə:** `.all Salam, Necəsiz?`")
 
 	chat = await q.get_input_chat()
 	a_=0
@@ -44,7 +44,7 @@ async def _(q):
 			break
 		a_+=1
 		await q.client.send_message(q.chat_id, "**{}**\n[{}](tg://user?id={})".format(seasons, i.first_name, i.id))
-		await sleep(1)
+		await sleep(0.5)
 
 @register(outgoing=True, pattern="^.alladmin(?: |$)(.*)", groups_only=True)
 async def _(q):
@@ -55,7 +55,7 @@ async def _(q):
 	if q.pattern_match.group(1):
 		seasons = q.pattern_match.group(1)
 	else:
-		seasons = ""
+		await q.edit("**Bir səbəb yaz...** 👀\n**Nümunə:** `.alladmin Salam, Necəsiz?`")
 
 	chat = await q.get_input_chat()
 	a_=0
