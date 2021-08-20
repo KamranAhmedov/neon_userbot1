@@ -53,3 +53,4 @@ Help = CmdHelp('sudo').add_command(
     ).add_command(
         'setgpic', '<cavablama>', 'Qrup fotosunu dəyişdirir.'
     ).add()
+
