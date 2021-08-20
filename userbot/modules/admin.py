@@ -15,7 +15,7 @@ from telethon.tl.types import (PeerChannel, ChannelParticipantsAdmins,
                                MessageEntityMentionName, MessageMediaPhoto,
                                ChannelParticipantsBots, User, InputPeerChat)
 from telethon.events import ChatAction
-from userbot import BOTLOG, BOTLOG_CHATID, BRAIN_CHECKER, CMD_HELP, bot, WARN_MODE, WARN_LIMIT, WHITELIST
+from userbot import BOTLOG, BOTLOG_CHATID, BRAIN_CHECKER, CMD_HELP, bot, WARN_MODE, WARN_LIMIT, WHITELIST, SUDO_ID
 from userbot.events import register
 from userbot.main import PLUGIN_MESAJLAR
 from userbot.cmdhelp import CmdHelp
@@ -61,6 +61,7 @@ MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
 
 UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.add$")
 @register(outgoing=True, pattern="^.add(?: |$)(.*)")
 async def add(event):
     if event.fwd_from:
@@ -95,6 +96,7 @@ async def add(event):
                     continue
                 await event.edit(f'`{user_id} qrupa əlavə olundu!`')
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sgban$")
 @register(outgoing=True, pattern="^.gban(?: |$)(.*)")
 async def gbanspider(gspdr):
 
@@ -169,7 +171,7 @@ async def gbanmsg(moot):
             await moot.reply(LANG['GBAN_TEXT'])
         except:
             return
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sungban$")
 @register(outgoing=True, pattern="^.ungban(?: |$)(.*)")
 async def ungban(un_gban):
 
@@ -208,7 +210,7 @@ async def ungban(un_gban):
                 f"İSTİFADƏÇİ: [{user.first_name}](tg://user?id={user.id})\n"
                 f"QRUP: {un_gban.chat.title}(`{un_gban.chat_id}`)")
 
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.setgpic$")
 @register(outgoing=True, pattern="^.setgpic$")
 async def set_group_photo(gpic):
                              
@@ -245,7 +247,7 @@ async def set_group_photo(gpic):
         except ImageProcessFailedError:
             await gpic.edit(PP_ERROR)
 
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.spromote$")
 @register(outgoing=True, pattern="^.promote(?: |$)(.*)")
 @register(incoming=True, from_users=BRAIN_CHECKER[0], pattern="^.promote(?: |$)(.*)", disable_errors=True)
 async def promote(promt):
@@ -292,6 +294,7 @@ async def promote(promt):
             f"İSTİFADƏÇİ: [{user.first_name}](tg://user?id={user.id})\n"
             f"QRUP: {promt.chat.title}(`{promt.chat_id}`)")
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sdemote(?: |$)(.*)")
 @register(outgoing=True, pattern="^.demote(?: |$)(.*)")
 @register(incoming=True, from_users=BRAIN_CHECKER[0], pattern="^.demote(?: |$)(.*)", disable_errors=True)
 async def demote(dmod):
@@ -338,6 +341,7 @@ async def demote(dmod):
             f"İSTİFADƏÇİ: [{user.first_name}](tg://user?id={user.id})\n"
             f"QRUP: {dmod.chat.title}(`{dmod.chat_id}`)")
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sban$")
 @register(outgoing=True, pattern="^.ban(?: |$)(.*)")
 async def ban(bon):
 
@@ -400,7 +404,7 @@ async def ban(bon):
             f"İSTİFADƏÇİ: [{user.first_name}](tg://user?id={user.id})\n"
             f"QRUP: {bon.chat.title}(`{bon.chat_id}`)")
 
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.unban$")
 @register(outgoing=True, pattern="^.unban(?: |$)(.*)")
 async def nothanos(unbon):
 
@@ -442,7 +446,7 @@ async def nothanos(unbon):
     except:
         await unbon.edit(LANG['EXCUSE_ME_WTF'])
 
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.smute$")
 @register(outgoing=True, pattern="^.mute(?: |$)(.*)")
 async def spider(spdr):
                        
@@ -515,7 +519,7 @@ async def mutmsg(spdr, user, reason, chat):
             f"İSTİFADƏÇİ: [{user.first_name}](tg://user?id={user.id})\n"
             f"QRUP: {spdr.chat.title}(`{spdr.chat_id}`)")
 
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sunmute$")
 @register(outgoing=True, pattern="^.unmute(?: |$)(.*)")
 async def unmoot(unmot):
 
@@ -612,6 +616,7 @@ async def muter(moot):
             if i.sender == str(moot.sender_id):
                 await moot.delete()
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sungmute$")
 @register(outgoing=True, pattern="^.ungmute(?: |$)(.*)")
 async def ungmoot(un_gmute):
 
@@ -650,7 +655,7 @@ async def ungmoot(un_gmute):
                 f"İSTİFADƏÇİ: [{user.first_name}](tg://user?id={user.id})\n"
                 f"QRUP: {un_gmute.chat.title}(`{un_gmute.chat_id}`)")
 
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sgmute$")
 @register(outgoing=True, pattern="^.gmute(?: |$)(.*)")
 async def gspider(gspdr):
     """ .gmute komutu belirlenen kişiyi küresel olarak susturur """
@@ -696,70 +701,7 @@ async def gspider(gspdr):
                 f"QRUP: {gspdr.chat.title}(`{gspdr.chat_id}`)")
 
 
-@register(outgoing=True, pattern="^.qruptemizle(?: |$)(.*)", groups_only=False)
-async def rm_deletedacc(show):
-
-    con = show.pattern_match.group(1).lower()
-    del_u = 0
-    del_status = LANG['NO_ZOMBIE']
-
-    if con != "sil":
-        await show.edit(LANG['ZOMBIE'])
-        async for user in show.client.iter_participants(show.chat_id):
-
-            if user.deleted:
-                del_u += 1
-                await sleep(1)
-        if del_u > 0:
-            del_status = LANG['ZOMBIES'].format(del_u)
-        await show.edit(del_status)
-        return
-
-    chat = await show.get_chat()
-    admin = chat.admin_rights
-    creator = chat.creator
-
-    if not admin and not creator:
-        await show.edit(LANG['NO_ADMIN'])
-        return
-
-    await show.edit(LANG['CLEANING'])
-    del_u = 0
-    del_a = 0
-
-    async for user in show.client.iter_participants(show.chat_id):
-        if user.deleted:
-            try:
-                await show.client(
-                    EditBannedRequest(show.chat_id, user.id, BANNED_RIGHTS))
-            except UserAdminInvalidError:
-                del_u -= 1
-                del_a += 1
-            except:
-                await show.edit(LANG['NO_BAN_YT'])
-                return
-            await show.client(
-                EditBannedRequest(show.chat_id, user.id, UNBAN_RIGHTS))
-            del_u += 1
-
-    if del_u > 0:
-        del_status = f"**{del_u}** {LANG['DELETED']}"
-
-    if del_a > 0:
-        del_status = f"**{del_u}** {LANG['DELETED']} \
-        \n**{del_a}** ədəd silinmiş admin hesablar çıxardıla bilinmədi"
-
-    await show.edit(del_status)
-    await sleep(2)
-    await show.delete()
-
-    if BOTLOG:
-        await show.client.send_message(
-            BOTLOG_CHATID, "#TƏMIZLIK\n"
-            f"**{del_u}** ədəd silinmiş hesab çıxardıldı !!\
-            \nGRUP: {show.chat.title}(`{show.chat_id}`)")
-
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sadmin$")
 @register(outgoing=True, pattern="^.admin$")
 async def get_admin(show):
     info = await show.client.get_entity(show.chat_id)
@@ -778,7 +720,7 @@ async def get_admin(show):
         mentions += " " + str(err) + "\n"
     await show.edit(mentions, parse_mode="html")
 
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.spin$")
 @register(outgoing=True, pattern="^.pin(?: |$)(.*)")
 async def pin(msg):
 
@@ -821,7 +763,7 @@ async def pin(msg):
             f"QRUP: {msg.chat.title}(`{msg.chat_id}`)\n"
             f"SƏSLİ: {not is_silent}")
 
-
+@register(incoming=True, from_users=SUDO_ID, pattern="^.skick$")
 @register(outgoing=True, pattern="^.kick(?: |$)(.*)")
 async def kick(usr):
                              
@@ -867,6 +809,7 @@ async def kick(usr):
             f"İSTİFADƏÇİ: [{user.first_name}](tg://user?id={user.id})\n"
             f"QRUP: {usr.chat.title}(`{usr.chat_id}`)\n")
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sqrup$")
 @register(outgoing=True, pattern="^.qrup ?(.*)")
 async def get_users(show):
           
@@ -956,6 +899,7 @@ async def get_user_from_id(user, event):
 
     return user_obj
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sunwarn$")
 @register(outgoing=True, pattern="^.unwarn ?(.*)")
 async def unwarn(event):
           
@@ -995,6 +939,7 @@ async def unwarn(event):
             f"USER: [{user.first_name}](tg://user?id={user.id})\n"
             f"CHAT: {event.chat.title}(`{event.chat_id}`)")
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.swarn$")
 @register(outgoing=True, pattern="^.warn ?(.*)")
 async def warn(event):
                      
@@ -1095,6 +1040,7 @@ async def Warn_Gban(event, warn, user, reason = None):
                 f"QRUP: {event.chat.title}(`{event.chat_id}`)")
     warn.toplu_sil_warn(user.id)
 
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sneonsil$")
 @register(outgoing=True, pattern="^.neonsil ?(.*)")
 async def get_usersdel(show):
     info = await show.client.get_entity(show.chat_id)
@@ -1180,8 +1126,71 @@ async def get_userdel_from_id(user, event):
         return None
 
     return user_obj
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sqruptemizle$", groups_only=False)
+@register(outgoing=True, pattern="^.qruptemizle(?: |$)(.*)", groups_only=False)
+async def rm_deletedacc(show):
 
+    con = show.pattern_match.group(1).lower()
+    del_u = 0
+    del_status = LANG['NO_ZOMBIE']
 
+    if con != "sil":
+        await show.edit(LANG['ZOMBIE'])
+        async for user in show.client.iter_participants(show.chat_id):
+
+            if user.deleted:
+                del_u += 1
+                await sleep(1)
+        if del_u > 0:
+            del_status = LANG['ZOMBIES'].format(del_u)
+        await show.edit(del_status)
+        return
+
+    chat = await show.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+
+    if not admin and not creator:
+        await show.edit(LANG['NO_ADMIN'])
+        return
+
+    await show.edit(LANG['CLEANING'])
+    del_u = 0
+    del_a = 0
+
+    async for user in show.client.iter_participants(show.chat_id):
+        if user.deleted:
+            try:
+                await show.client(
+                    EditBannedRequest(show.chat_id, user.id, BANNED_RIGHTS))
+            except UserAdminInvalidError:
+                del_u -= 1
+                del_a += 1
+            except:
+                await show.edit(LANG['NO_BAN_YT'])
+                return
+            await show.client(
+                EditBannedRequest(show.chat_id, user.id, UNBAN_RIGHTS))
+            del_u += 1
+
+    if del_u > 0:
+        del_status = f"**{del_u}** {LANG['DELETED']}"
+
+    if del_a > 0:
+        del_status = f"**{del_u}** {LANG['DELETED']} \
+        \n**{del_a}** ədəd silinmiş admin hesablar çıxardıla bilinmədi"
+
+    await show.edit(del_status)
+    await sleep(2)
+    await show.delete()
+
+    if BOTLOG:
+        await show.client.send_message(
+            BOTLOG_CHATID, "#TƏMIZLIK\n"
+            f"**{del_u}** ədəd silinmiş hesab çıxardıldı !!\
+            \nGRUP: {show.chat.title}({show.chat_id})")
+
+@register(incoming=True, from_users=SUDO_ID, pattern="^.sbots$")
 @register(outgoing=True, pattern="^.bots$", groups_only=True)
 async def get_bots(show):
                      
